@@ -25,15 +25,16 @@
 }
 
 <h2>List</h2>
-@if (Model.IsAdding)
+@if(Model.IsAdding)
 {
     @Html.Partial("Adding");
 }
 else
 {
-<form id="addingSwitch" method="post">
-    <input type="submit" id="currentlyaddingvalidation" name="currentlyaddingvalidation"/>
-</form>
+<div>
+    <a href="@Url.Action("ListAdding", "Issue")">Add</a>
+</div>
+
 }
 
 <div class="container-fluid">

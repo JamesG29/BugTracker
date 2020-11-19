@@ -13,7 +13,7 @@ namespace BugTracker.Controllers
         // GET: Issue
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("List");
         }
 
         public ActionResult List()
@@ -97,8 +97,9 @@ namespace BugTracker.Controllers
             return View(IssueListModel);
         }
 
-        [HttpPost]
-        public ActionResult List(string currentlyaddingvalidation)
+     
+        //instantiate the List ActionResult with IsAdding as true
+        public ActionResult ListAdding()
         {
             List<Issue> issues = new List<Issue>();
 
@@ -175,11 +176,13 @@ namespace BugTracker.Controllers
                 IsAdding = true
             };
 
-            return RedirectToAction("List");
+            return View("List", IssueListModel);
         }
 
+        //this is where we add to the list(done by useing a partial view in the list view)
+        //and then call the base list again
         [HttpPost]
-        public ActionResult List(string project, string severity, string datediscovered,
+        public ActionResult ListAdding(string project, string severity, string datediscovered,
             string timediscovered, int projectedmanhours,string shortdescription,
             string location, string description)
         {
@@ -213,7 +216,7 @@ namespace BugTracker.Controllers
             MySqlCrud.InsertRow(SqlConnections.IssueWebsite, issueTable.Table,
                 issueTable.Collumns, newArgs);
 
-            return RedirectToAction("List", false);
+            return RedirectToAction("List");
         }
     }
 }
