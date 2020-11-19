@@ -5,7 +5,7 @@
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
-@{ 
+@{
     /*
     idIssues DEFAULT(int)
     project name
@@ -20,33 +20,47 @@
     description string
     */
 
-    bool shit = false;
+    bool adding = false;
 
-    }
 }
 
 <h2>List</h2>
-@Html.Partial("Adding");
+@if (Model.IsAdding)
+{
+    @Html.Partial("Adding");
+}
+else
+{
+<form id="addingSwitch" method="post">
+    <input type="submit" id="currentlyaddingvalidation" name="currentlyaddingvalidation"/>
+</form>
+}
+
 <div class="container-fluid">
-        @for (int i = 0; i < @Model.Issues.Count; i++)
-        {
-            <h2>DOGSHIT</h2>
-            <div class="row">
-                <div class="col-md-4 col-lg-2">
-                    <h3>@Model.Issues[i].Severity</h3>
-                </div>
-                <div class="col-md-4 col-lg-2">
-                    <h3>@Model.Issues[i].DateDiscovered</h3>
-                </div>
-                <div class="col-md-4 col-lg-2">
-                    <h3>$@Model.Issues[i].ProjectedCost</h3>
-                </div>
-                <div class="col-md-4 col-lg-2">
-                    <h3>@Model.Issues[i].ShortDescription</h3>
-                </div>
-                <div class="col-md-4 col-lg-2">
-                    <h3>@Model.Issues[i].Location</h3>
-                </div>
+    @if (Model.IsAdding)
+    {
+        <h3>Hmm</h3>
+    }
+
+    @for (int i = 0; i < @Model.Issues.Count; i++)
+    {
+        <h2>DOGSHIT</h2>
+        <div class="row">
+            <div class="col-md-4 col-lg-2">
+                <h3>@Model.Issues[i].Severity</h3>
             </div>
-        }
+            <div class="col-md-4 col-lg-2">
+                <h3>@Model.Issues[i].DateDiscovered</h3>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <h3>$@Model.Issues[i].ProjectedCost</h3>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <h3>@Model.Issues[i].ShortDescription</h3>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <h3>@Model.Issues[i].Location</h3>
+            </div>
+        </div>
+    }
 </div>

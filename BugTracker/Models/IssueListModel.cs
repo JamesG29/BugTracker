@@ -8,5 +8,6 @@ namespace BugTracker.Models
     public class IssueListModel
     {
         public List<Issue> Issues { get; set; }
+        public bool IsAdding { get; set; }
     }
 }
