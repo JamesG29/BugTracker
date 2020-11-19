@@ -13,40 +13,45 @@
         description string
         */
 }
-<form id="addIssue" method="post">
-    <div>
-        <label for="project">Associated Project</label>
-        <input type="text" id="project" placeholder="Enter Project Name" name="project" />
-    </div>
-    <div>
-        <label for="severity">Severity of Issue</label>
-        <input type="text" id="severity" name="severity" />
-    </div>
-    <div>
-        <label for="datediscovered">Date Found</label>
-        <input type="text" id="datediscovered" name="datediscovered"/>
-    </div>
-    <div>
-        <label for="timediscovered">Time Found</label>
-        <input type="text" id="timediscovered" name="timediscovered" />
-    </div>
-    <div>
-        <label for="projectedmanhours">Estimated Time(hours) to Resolve</label>
-        <input type="number" id="projectedmanhours" name="projectedmanhours"/>
-    </div>
-    <div>
-        <label for="shortdescription">A Short Readable Description</label>
-        <input type="text" id="shortdescription" name="shortdescription" />
-    </div>
-    <div>
-        <label for="location">Location of File in Project</label>
-        <input type="text" id="location" name="location" />
-    </div>
-    <div>
-        <label for="description">Full Issue Description</label>
-        <input type="text" id="description" name="description" />
-    </div>
-    <div>
-        <button class="submit">Submit</button>
-    </div>
-</form>
+<div>
+    <form id="addIssue" method="post">
+        <div>
+            <label for="project">Associated Project</label>
+            <input type="text" id="project" placeholder="Enter Project Name" name="project" />
+        </div>
+        <div>
+            <label for="severity">Severity of Issue</label>
+            <input type="text" id="severity" name="severity" />
+        </div>
+        <div>
+            <label for="datediscovered">Date Found</label>
+            <input type="text" id="datediscovered" name="datediscovered" />
+        </div>
+        <div>
+            <label for="timediscovered">Time Found</label>
+            <input type="text" id="timediscovered" name="timediscovered" />
+        </div>
+        <div>
+            <label for="projectedmanhours">Estimated Time(hours) to Resolve</label>
+            <input type="number" id="projectedmanhours" name="projectedmanhours" />
+        </div>
+        <div>
+            <label for="shortdescription">A Short Readable Description</label>
+            <input type="text" id="shortdescription" name="shortdescription" />
+        </div>
+        <div>
+            <label for="location">Location of File in Project</label>
+            <input type="text" id="location" name="location" />
+        </div>
+        <div>
+            <label for="description">Full Issue Description</label>
+            <input type="text" id="description" name="description" />
+        </div>
+        <div>
+            <button class="submit">Submit</button>
+        </div>
+    </form>
+</div>
+<div>
+    <a href="@Url.Action("List", "Issue")">Close</a>
+</div>
