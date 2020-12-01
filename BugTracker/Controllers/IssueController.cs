@@ -42,9 +42,12 @@ namespace BugTracker.Controllers
             int r = 0;
             foreach (var i in values[0])
             {
-
+                /*
                 int issueId;
                 Int32.TryParse(values[0][r], out issueId);
+                */
+
+                string issueId = values[0][r];
 
                 string project = values[1][r]; //100 MaxChars
                 string severity = values[2][r]; //45 MaxChars
@@ -70,6 +73,7 @@ namespace BugTracker.Controllers
 
                 Issue ish = new Issue()
                 {
+                    IssueId = issueId,
                     Project = project,
                     Severity = severity,
                     DateDiscovered = datediscovered,
@@ -124,9 +128,11 @@ namespace BugTracker.Controllers
             int r = 0;
             foreach (var i in values[0])
             {
-
+                /*
                 int issueId;
                 Int32.TryParse(values[0][r], out issueId);
+                */
+                string issueId = values[0][r];
 
                 string project = values[1][r]; //100 MaxChars
                 string severity = values[2][r]; //45 MaxChars
@@ -152,6 +158,7 @@ namespace BugTracker.Controllers
 
                 Issue ish = new Issue()
                 {
+                    IssueId = issueId,
                     Project = project,
                     Severity = severity,
                     DateDiscovered = datediscovered,

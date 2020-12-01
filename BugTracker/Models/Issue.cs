@@ -7,6 +7,7 @@ namespace BugTracker.Models
 {
     public class Issue
     {
+        public string IssueId { get; set; }
         public string Project { get; set; }
         public string Severity { get; set; }
         public string DateDiscovered { get; set; }

@@ -8,7 +8,7 @@ namespace BugTracker.Models
 {
     public class MySqlCrud
     {
-        private static bool OpenConnection(MySqlConnection connection)
+        public static bool OpenConnection(MySqlConnection connection)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace BugTracker.Models
             }
         }
 
-        private static bool CloseConnection(MySqlConnection connection)
+        public static bool CloseConnection(MySqlConnection connection)
         {
             try
             {
