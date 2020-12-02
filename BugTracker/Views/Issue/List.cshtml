@@ -7,24 +7,24 @@
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
 @{
-    /*
-    idIssues DEFAULT(int)
-    project name
-    severity string
-    datediscovered string  XX/XX/XXXX
-    time discovered string  XX:XX:XX
-    projectedmanhours float
-    projectedcost float
-    shortdescription string
-    location string
-    popularity int
-    description string
-    */
+/*
+idIssues DEFAULT(int)
+project name
+severity string
+datediscovered string  XX/XX/XXXX
+time discovered string  XX:XX:XX
+projectedmanhours float
+projectedcost float
+shortdescription string
+location string
+popularity int
+description string
+*/
 
 }
 
 <h2>List</h2>
-@if(Model.IsAdding)
+@if (Model.IsAdding)
 {
     @Html.Partial("Adding");
 }
@@ -37,34 +37,51 @@ else
 }
 
 <div class="container-fluid" runat="server">
-    @if (Model.IsAdding)
-    {
-        <h3>Hmm</h3>
-    }
+    <h2>Issues</h2>
+
+    <div class="row">
+        <div class="col-sm-4 col-md-2">
+            <a href="@Url.Action()"></a>
+             @{//Model.Issues = IssueListSorts.SortBySeverity(Model.Issues, true); 
+
+             }}
+        </div>
+        <div class="col-sm-4 col-md-2">
+
+        </div>
+        <div class="col-sm-4 col-md-2">
+
+        </div>
+        <div class="col-sm-4 col-md-2">
+
+        </div>
+        <div class="col-sm-4 col-md-2">
+
+        </div>
+    </div>
 
     @for (int i = 0; i < @Model.Issues.Count; i++)
     {
         //html id's cannot start with a number. so DT = 'data-target', in a sense that is
         string issId = $"DT{Model.Issues[i].IssueId}";
 
-        <h2>Issue</h2>
         <div class="row">
-            <div class="col-md-4 col-lg-2">
+            <div class="col-sm-4 col-md-2">
                 <h3>@Model.Issues[i].Severity</h3>
             </div>
-            <div class="col-md-4 col-lg-2">
+            <div class="col-sm-4 col-md-2">
                 <h3>@Model.Issues[i].DateDiscovered</h3>
             </div>
-            <div class="col-md-4 col-lg-2">
+            <div class="col-sm-4 col-md-2">
                 <h3>$@Model.Issues[i].ProjectedCost</h3>
             </div>
-            <div class="col-md-4 col-lg-2">
+            <div class="col-sm-4 col-md-2">
                 <h3>@Model.Issues[i].ShortDescription</h3>
             </div>
-            <div class="col-md-4 col-lg-2">
+            <div class="col-sm-4 col-md-2">
                 <h3>@Model.Issues[i].Location</h3>
             </div>
-            <div class="col-lg-1">
+            <div class="col-lg-2">
                 <button class="btn btn-primary" id="detailButton" type="button" data-toggle="collapse"
                         data-target="#@issId">
                     Details
@@ -73,9 +90,10 @@ else
 
         </div>
         <div id="@issId" class="row collapse">
-            <div>
-                <p>@Model.Issues[i].Description</p>
-            </div>
+            @Html.Partial("IssueInfo", Model.Issues[i])
         </div>
     }
+</div>
+<div>
+    
 </div>

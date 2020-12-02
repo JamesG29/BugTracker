@@ -173,6 +173,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Issue.cs" />
     <Compile Include="Models\IssueListModel.cs" />
+    <Compile Include="Models\IssueListSorts.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\MySqlColumnCrud.cs" />
     <Compile Include="Models\MySqlCrud.cs" />
