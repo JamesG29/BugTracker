@@ -260,5 +260,21 @@ namespace BugTracker.Models
             }
 
         }
+    
+        public static void TruncateTable(MySqlConnection connection, string table)
+        {
+            string query = $"TRUNCATE TABLE {table};";
+
+            CloseConnection(connection);
+
+            if (OpenConnection(connection))
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                cmd.ExecuteNonQuery();
+
+                CloseConnection(connection);
+            }
+        }
     }
 }

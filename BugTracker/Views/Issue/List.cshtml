@@ -7,19 +7,90 @@
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
 @{
-/*
-idIssues DEFAULT(int)
-project name
-severity string
-datediscovered string  XX/XX/XXXX
-time discovered string  XX:XX:XX
-projectedmanhours float
-projectedcost float
-shortdescription string
-location string
-popularity int
-description string
-*/
+    /*
+    idIssues DEFAULT(int)
+    project name
+    severity string
+    datediscovered string  XX/XX/XXXX
+    time discovered string  XX:XX:XX
+    projectedmanhours float
+    projectedcost float
+    shortdescription string
+    location string
+    popularity int
+    description string
+    */
+
+    //how the different categories are currently being sorted
+    int dateStatus = 0;
+    int severityStatus = 0;
+    int costStatus = 0;
+    int locationStatus = 0;
+
+    //The value these should represent if changed, we default to 1(descending)
+    int dateChange = 1;
+    int severityChange = 1;
+    int costChange = 1;
+    int locationChange = 1;
+
+
+    //a 3 implies already descending & a 4 implies already ascending, in terms of sorting
+    //a 1 implies the next change will make it descending, a 2 implies next change will make it ascending
+    if (Model.IsSortingDate)
+    {
+        if (Model.SortingDateDescending)
+        {
+            dateStatus = 3;
+            dateChange = 2;
+        }
+        else
+        {
+            dateStatus = 4;
+        }
+    }
+
+    if (Model.IsSortingSeverity)
+    {
+        if (Model.SortingSeverityDescending)
+        {
+            severityStatus = 3;
+            severityChange = 2;
+        }
+        else
+        {
+            severityStatus = 4;
+        }
+    }
+
+    if (Model.IsSortingCost)
+    {
+        if (Model.SortingCostDescending)
+        {
+            costStatus = 3;
+            costChange = 2;
+        }
+        else
+        {
+            costStatus = 4;
+        }
+    }
+
+    if (Model.IsSortingLocation)
+    {
+        if (Model.SortingLocationDescending)
+        {
+            locationStatus = 3;
+            locationChange = 2;
+        }
+        else
+        {
+            locationStatus = 4;
+        }
+    }
+
+
+
+
 
 }
 
@@ -31,9 +102,8 @@ description string
 else
 {
 <div>
-    <a href="@Url.Action("ListAdding", "Issue")">Add</a>
+    <a href="@Url.Action("ListAdding", "Issue", new { area = ""})">Add</a>
 </div>
-
 }
 
 <div class="container-fluid" runat="server">
@@ -41,19 +111,16 @@ else
 
     <div class="row">
         <div class="col-sm-4 col-md-2">
-            <a href="@Url.Action()"></a>
-             @{//Model.Issues = IssueListSorts.SortBySeverity(Model.Issues, true); 
-
-             }}
+            <a href="@Url.Action("SortList", "Issue", new { sev = severityChange, date = dateStatus, cost = costStatus, location = locationStatus})">Severity</a>
         </div>
         <div class="col-sm-4 col-md-2">
-
+            <a href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateChange, cost = costStatus, location = locationStatus})">Date</a>
         </div>
         <div class="col-sm-4 col-md-2">
-
+            <a href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateStatus, cost = costChange, location = locationStatus})">Cost</a>
         </div>
         <div class="col-sm-4 col-md-2">
-
+            <a href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateStatus, cost = costStatus, location = locationChange})">Sort</a>
         </div>
         <div class="col-sm-4 col-md-2">
 

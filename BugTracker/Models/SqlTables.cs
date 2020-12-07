@@ -26,5 +26,25 @@ namespace BugTracker.Models
                 "description"
             }
         };
+        public static MySqlTableModel IssuesOrdered = new MySqlTableModel()
+        {
+            Server = "localhost",
+            Table = "issuesordered",
+            Collumns = new List<string>()
+            {
+                "idissues",
+                "project",
+                "severity",
+                "datediscovered",
+                "timediscovered",
+                "projectedmanhours",
+                "projectedcost",
+                "shortdescription",
+                "location",
+                "popularity",
+                "description",
+                "originalissueid"
+            }
+        };
     }
 }

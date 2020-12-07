@@ -13,7 +13,7 @@ namespace BugTracker.Models
         public bool SortingSeverityDescending { get; set; }
         public bool IsSortingDate { get; set; }
         public bool SortingDateDescending { get; set; }
-        public bool isSortingCost { get; set; }
+        public bool IsSortingCost { get; set; }
         public bool SortingCostDescending { get; set; }
         public bool IsSortingLocation { get; set; }
         public bool SortingLocationDescending { get; set; }
