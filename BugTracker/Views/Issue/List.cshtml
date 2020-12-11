@@ -95,16 +95,24 @@
 }
 
 <h2>List</h2>
-@if (Model.IsAdding)
+@if (Model.IsEditing)
 {
-    @Html.Partial("Adding");
+    @Html.Partial("Editing");
 }
 else
 {
-    <div>
-        <a class="btn btn-sm btn-primary" href="@Url.Action("ListAdding", "Issue", new { area = ""})">Add</a>
-    </div>
+    if (Model.IsAdding)
+    {
+        @Html.Partial("Adding");
+    }
+    else
+    {
+        <div>
+            <a class="btn btn-sm btn-primary" href="@Url.Action("ListAdding", "Issue", new { area = ""})">Add Issue</a>
+        </div>
+    }
 }
+
 
 <div class="container-fluid" runat="server">
     <h2>Issues</h2>
@@ -116,14 +124,14 @@ else
         <div class="col-sm-4 col-md-2">
             <a class="btn btn-sm btn-primary" href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateChange, cost = costStatus, location = locationStatus})">Date</a>
         </div>
-        <div class="col-sm-4 col-md-2">
-            <a class="btn btn-sm btn-primary" href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateStatus, cost = costChange, location = locationStatus})">Cost</a>
+        <div class="col-sm-4 col-md-1">
+            <a class="btn btn-sm btn-primary" href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateStatus, cost = costChange, location = locationStatus})">Projected Cost</a>
         </div>
         <div class="col-sm-4 col-md-2">
 
         </div>
         <div class="col-sm-4 col-md-2">
-            <a class="btn btn-sm btn-primary" href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateStatus, cost = costStatus, location = locationChange})">Sort</a>
+            <a class="btn btn-sm btn-primary" href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateStatus, cost = costStatus, location = locationChange})">File Location</a>
         </div>
 
     </div>
@@ -132,6 +140,7 @@ else
     {
         //html id's cannot start with a number. so DT = 'data-target', in a sense that is
         string issId = $"DT{Model.Issues[i].IssueId}";
+        string Id = Model.Issues[i].IssueId;
 
         <div class="row">
             <div class="col-sm-4 col-md-2">
@@ -140,7 +149,7 @@ else
             <div class="col-sm-4 col-md-2">
                 <h3>@Model.Issues[i].DateDiscovered</h3>
             </div>
-            <div class="col-sm-4 col-md-2">
+            <div class="col-sm-2 col-md-1">
                 <h3>$@Model.Issues[i].ProjectedCost</h3>
             </div>
             <div class="col-sm-4 col-md-2">
@@ -149,10 +158,13 @@ else
             <div class="col-sm-4 col-md-2">
                 <h3>@Model.Issues[i].Location</h3>
             </div>
-            <div class="col-lg-1">
-
+            <div class="col-md-1">
+                <a class="btn-sm btn-primary" href="@Url.Action("EditListItem", "Issue", new {id = Id })">Edit</a>
             </div>
-            <div class="col-lg-1">
+            <div class="col-md-1">
+                <a class="btn-sm btn-primary" href="@Url.Action("CompleteListItem", "Issue", new {id = Id })">Completed</a>
+            </div>
+            <div class="col-md-1">
                 <button class="btn btn-primary" id="detailButton" type="button" data-toggle="collapse"
                         data-target="#@issId">
                     Details
@@ -175,7 +187,7 @@ else
 
         const form = document.getElementById("addIssue");
 
-        form.addEventListener("submit", function(event){
+        form.addEventListener("submit", function (event) {
 
             if (form.checkValidity() == false) {
                 event.preventDefault();

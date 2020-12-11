@@ -9,6 +9,9 @@ namespace BugTracker.Models
     {
         public List<Issue> Issues { get; set; }
         public bool IsAdding { get; set; }
+        public bool IsEditing { get; set; }
+        public Issue EditIssue { get; set; }//the Issue currently being edited
+        public bool IsShowingResolved { get; set; }
         public bool IsSortingSeverity { get; set; }
         public bool SortingSeverityDescending { get; set; }
         public bool IsSortingDate { get; set; }

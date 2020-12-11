@@ -226,6 +226,7 @@
     <Content Include="Views\Issue\List.cshtml" />
     <Content Include="Views\Issue\Adding.cshtml" />
     <Content Include="Views\Issue\IssueInfo.cshtml" />
+    <Content Include="Views\Issue\Editing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

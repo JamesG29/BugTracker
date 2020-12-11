@@ -1,5 +1,12 @@
 ﻿@model BugTracker.Models.Issue
 
-<p>
-    @Model.Description
-</p>
+    <div class="row">
+        <div class="col-lg-9">
+            <label for="desc">Full Description</label>
+            <p id="desc">@Model.Description</p>
+        </div>
+        <div class="col-lg-3">
+            <label for="projectDet">Project</label>
+            <h4 id="projectDet">@Model.Project</h4>
+        </div>
+    </div>

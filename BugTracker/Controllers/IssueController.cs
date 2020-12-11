@@ -55,6 +55,7 @@ namespace BugTracker.Controllers
             {
                 Issues = issues,
                 IsAdding = false,
+                IsEditing = false
             };
 
             return View(IssueListModel);
@@ -69,7 +70,8 @@ namespace BugTracker.Controllers
             IssueListModel IssueListModel = new IssueListModel()
             {
                 Issues = issues,
-                IsAdding = true
+                IsAdding = true,
+                IsEditing = false
             };
 
             return View("List", IssueListModel);
@@ -256,6 +258,7 @@ namespace BugTracker.Controllers
             {
                 Issues = issues,
                 IsAdding = false,
+                IsEditing = false,
                 IsSortingSeverity = sevOrdered,
                 SortingSeverityDescending = sevDesc,
                 IsSortingCost = costOrdered,
@@ -271,6 +274,149 @@ namespace BugTracker.Controllers
             return View("List", issueListModel);
         }
 
+        public ActionResult CompleteListItem(int id)
+        {
+            List<string> list = new List<string>();
+            list = MySqlCrud.SelectRow(SqlConnections.IssueWebsite, SqlTables.Issues.Table,
+                SqlTables.Issues.Collumns, id);
+
+            MySqlCrud.DeleteRow(SqlConnections.IssueWebsite, SqlTables.Issues.Table, "idIssues", id.ToString());
+
+            //temporary bad way of doing this due to upcoming interview
+            List<string> resolvedArgTypes = new List<string>() { 
+                "idresolvedissues",
+                "project",
+                "severity",
+                "datediscovered",
+                "timediscovered",
+                "projectedmanhours",
+                "projectedcost",
+                "shortdescription",
+                "location",
+                "popularity",
+                "description",
+                "originalid"
+            };
+            List<string> args = new List<string>()
+            {
+                "DEFAULT"
+            };
+            for(int i = 0; i < list.Count; i++)
+            {
+                if(i != 0)
+                {
+                    args.Add(list[i]);
+                }
+            }
+            args.Add(list[0]);
+            MySqlCrud.InsertRow(SqlConnections.IssueWebsite, "resolvedissues", resolvedArgTypes, args);
+
+            return RedirectToAction("List");
+        }
+
+        public ActionResult EditListItem(int id)
+        {
+            List<Issue> issues = IssueListSorts.CreateTypicalIssueList();
+
+            //first we clear the table for initializing
+            MySqlCrud.TruncateTable(SqlConnections.IssueWebsite, "issuesordered");
+            //keep track of new id(primary key)
+            int L = 1;
+
+            foreach (Issue issue in issues)
+            {
+                List<string> arguments = new List<string>()
+                {
+                    L.ToString(),
+                    issue.Project,
+                    issue.Severity,
+                    issue.DateDiscovered,
+                    issue.TimeDiscovered,
+                    issue.ProjectedManHours.ToString(),
+                    issue.ProjectedCost.ToString(),
+                    issue.ShortDescription,
+                    issue.Location,
+                    issue.Popularity.ToString(),
+                    issue.Description,
+                    issue.IssueId
+                };
+
+                L++;
+
+                //we now assign values to the table based off of default issue order
+                MySqlCrud.InsertRow(SqlConnections.IssueWebsite, "issuesordered",
+                    SqlTables.IssuesOrdered.Collumns, arguments);
+            }
+
+            IssueListModel IssueListModel = new IssueListModel()
+            {
+                Issues = issues,
+                IsAdding = false,
+                IsEditing = true,
+                EditIssue = issues[id-1]
+            };
+
+            return View("List", IssueListModel);
+        }
+
+        [HttpPost]
+        public ActionResult EditListItem(int id, string project, string severity = "", string dateFound = "",
+            string timeFound = "", int? hours = 0, string shortDesc = "", string location = "", string description = "")
+        {
+            List<string> argCollumns = new List<string>();
+            List<string> args = new List<string>();
+
+            //we are going to add each variable one at a time to the arg lists
+            if(severity != "")
+            {
+                argCollumns.Add("Severity");
+                args.Add(severity);
+            }
+
+            if(dateFound != "")
+            {
+                argCollumns.Add("DateDiscovered");
+                args.Add(dateFound);
+            }
+
+            if (timeFound != "")
+            {
+                argCollumns.Add("TimeDiscovered");
+                args.Add(timeFound);
+            }
+
+            if (hours != 0)
+            {
+                argCollumns.Add("ProjectedManHours");
+                args.Add(hours.ToString());
+            }
+
+            if (shortDesc != "")
+            {
+                argCollumns.Add("ShortDescription");
+                args.Add(shortDesc);
+            }
+
+            if (location != "")
+            {
+                argCollumns.Add("Location");
+                args.Add(location);
+            }
+
+            if (description != "")
+            {
+                argCollumns.Add("Description");
+                args.Add(description);
+            }
+
+
+
+            MySqlConnection connect = SqlConnections.IssueWebsite;
+            MySqlTableModel tbl = SqlTables.Issues;
+            MySqlCrud.UpdateRow(connect, tbl.Table, argCollumns, args, "idissues", id.ToString());
+
+            return RedirectToAction("List");
+        }
 
         
     }

@@ -261,6 +261,41 @@ namespace BugTracker.Models
 
         }
     
+        public static List<string> SelectRow(MySqlConnection connection, string table, List<string> tableArgTypes, int id)
+        {
+            CloseConnection(connection);
+
+            string query = $"SELECT * FROM {table} WHERE idissues = {id.ToString()} LIMIT 1";
+            List<string> list = new List<string>();
+
+            if (OpenConnection(connection))
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                MySqlDataReader dataRead = cmd.ExecuteReader();
+
+                while (dataRead.Read())
+                {
+                    for(int i = 0; i < tableArgTypes.Count; i++)
+                    {
+                        list.Add(dataRead[tableArgTypes[i]] + "");
+                    }
+                    
+                }
+
+                dataRead.Close();
+
+                CloseConnection(connection);
+
+                return list;
+            }
+            else
+            {
+                return list;
+            }
+
+        }
+
         public static void TruncateTable(MySqlConnection connection, string table)
         {
             string query = $"TRUNCATE TABLE {table};";
