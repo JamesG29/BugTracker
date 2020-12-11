@@ -114,6 +114,18 @@ namespace BugTracker.Models
                             return -1;
                         }
 
+                        //we now know that neither are Medium
+
+                        if(x.Severity == "High")
+                        {
+                            return 1;
+                        }
+
+                        if(y.Severity == "High")
+                        {
+                            return -1;
+                        }
+
                         return 0;
                       
                     }
@@ -171,6 +183,17 @@ namespace BugTracker.Models
                             return 1;
                         }
 
+                        //we now know that neither are medium
+
+                        if (x.Severity == "High")
+                        {
+                            return -1;
+                        }
+
+                        if (y.Severity == "High")
+                        {
+                            return 1;
+                        }
                         return 0;
 
                     }
@@ -407,7 +430,7 @@ namespace BugTracker.Models
 
             for(int i = 0; i < itterations; i++)
             {
-                if(xLoc[i] > yLoc[i])
+                if(Char.ToUpper(xLoc[i]) > Char.ToUpper(yLoc[i]))
                 {
                     return 1;
                 }
@@ -470,7 +493,7 @@ namespace BugTracker.Models
 
             for (int i = 0; i < itterations; i++)
             {
-                if (xLoc[i] > yLoc[i])
+                if (Char.ToUpper(xLoc[i]) > Char.ToUpper(yLoc[i]))
                 {
                     return -1;
                 }

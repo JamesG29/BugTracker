@@ -101,9 +101,9 @@
 }
 else
 {
-<div>
-    <a href="@Url.Action("ListAdding", "Issue", new { area = ""})">Add</a>
-</div>
+    <div>
+        <a class="btn btn-sm btn-primary" href="@Url.Action("ListAdding", "Issue", new { area = ""})">Add</a>
+    </div>
 }
 
 <div class="container-fluid" runat="server">
@@ -111,20 +111,21 @@ else
 
     <div class="row">
         <div class="col-sm-4 col-md-2">
-            <a href="@Url.Action("SortList", "Issue", new { sev = severityChange, date = dateStatus, cost = costStatus, location = locationStatus})">Severity</a>
+            <a class="btn btn-sm btn-primary" href="@Url.Action("SortList", "Issue", new { sev = severityChange, date = dateStatus, cost = costStatus, location = locationStatus})">Severity</a>
         </div>
         <div class="col-sm-4 col-md-2">
-            <a href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateChange, cost = costStatus, location = locationStatus})">Date</a>
+            <a class="btn btn-sm btn-primary" href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateChange, cost = costStatus, location = locationStatus})">Date</a>
         </div>
         <div class="col-sm-4 col-md-2">
-            <a href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateStatus, cost = costChange, location = locationStatus})">Cost</a>
-        </div>
-        <div class="col-sm-4 col-md-2">
-            <a href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateStatus, cost = costStatus, location = locationChange})">Sort</a>
+            <a class="btn btn-sm btn-primary" href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateStatus, cost = costChange, location = locationStatus})">Cost</a>
         </div>
         <div class="col-sm-4 col-md-2">
 
         </div>
+        <div class="col-sm-4 col-md-2">
+            <a class="btn btn-sm btn-primary" href="@Url.Action("SortList", "Issue", new { sev = severityStatus, date = dateStatus, cost = costStatus, location = locationChange})">Sort</a>
+        </div>
+
     </div>
 
     @for (int i = 0; i < @Model.Issues.Count; i++)
@@ -148,7 +149,10 @@ else
             <div class="col-sm-4 col-md-2">
                 <h3>@Model.Issues[i].Location</h3>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-1">
+
+            </div>
+            <div class="col-lg-1">
                 <button class="btn btn-primary" id="detailButton" type="button" data-toggle="collapse"
                         data-target="#@issId">
                     Details
@@ -162,5 +166,22 @@ else
     }
 </div>
 <div>
-    
+
 </div>
+
+@section scripts{
+    <script>
+        //document.body.style.backgroundColor = "red";
+
+        const form = document.getElementById("addIssue");
+
+        form.addEventListener("submit", function(event){
+
+            if (form.checkValidity() == false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        })
+    </script>
+}
